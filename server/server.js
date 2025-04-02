@@ -45,7 +45,7 @@ const fetchOpenAIResponse = async () => {
 }
 
 // Returns a JSON containing the questions for the quiz
-// ID parameter can be passed in (later in development) to get the contents of the article being read to give to the AI model
+// ID parameter can be passed in (later in development) to find and get the contents of the article being read to give to the AI model
 app.get("/quiz", async (req, res) => {
     const response = await fetchOpenAIResponse();
     res.send(response);

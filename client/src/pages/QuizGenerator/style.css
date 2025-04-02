@@ -1,0 +1,11 @@
+.answerContainer {
+    width: 100%;
+    height: 50px;
+    border-radius: 10px;
+    border: 2px solid var(--primary-color);
+}
+
+.answerCheckbox {
+    width: 20px;
+    height: 20px;
+}
