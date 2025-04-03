@@ -30,7 +30,7 @@
 }
 
 .noselect:hover {
-    transform: scale(1.0);
+    transform: none;
     cursor: default;
 }
 
@@ -40,7 +40,7 @@
 }
 
 .correct:hover {
-    transform: scale(1.0);
+    transform: none;
     cursor: default;
 }
 
@@ -51,7 +51,7 @@
 }
 
 .correct-not-selected:hover {
-    transform: scale(1.0);
+    transform: none;
     cursor: default;
 }
 
@@ -62,7 +62,7 @@
 }
 
 .incorrect:hover {
-    transform: scale(1.0);
+    transform: none;
     cursor: default;
 }
 
@@ -83,6 +83,17 @@ button {
 
 #navButton{
     margin-top: 30px;
+}
+
+.disabled {
+    border-color: var(--background-color-light);
+    background-color: var(--background-color);
+    color: var(--background-color-light);
+}
+
+.disabled:hover {
+    transform: none;
+    cursor: default;
 }
 
 button:hover {

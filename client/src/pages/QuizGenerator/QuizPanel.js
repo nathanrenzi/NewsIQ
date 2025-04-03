@@ -4,11 +4,19 @@ import Axios from "axios";
 import Answer from "./Answer.js";
 
 export default function QuizPanel() {
-	const [quiz, setQuiz] = useState("");
+    // Stores the quiz JSON
+    const [quiz, setQuiz] = useState("");
+    // Stores the current question number
     const [questionNumber, setQuestionNumber] = useState(0);
+    // Stores the current state of the answer visuals
     const [answerVisuals, setAnswerVisuals] = useState({ answer1: "default", answer2: "default", answer3: "default", answer4: "default" });
+    // Stores the current state of the control button visuals
+    const [controlVisuals, setControlVisuals] = useState({ previousButton: "", nextButton: "" });
+    // Stores the selected answers for each question
     const [answersSelected, setAnswersSelected] = useState({});
+    // Stores whether the quiz has been loaded or not
     const [loaded, setLoaded] = useState(false);
+    // Stores the message to display before the quiz has been loaded
     const [message, setMessage] = useState("Generating quiz...")
 
     useEffect(() => {
@@ -55,6 +63,15 @@ export default function QuizPanel() {
             const visuals = { answer1: "default", answer2: "default", answer3: "default", answer4: "default" };
             setAnswerVisuals(visuals);
         }
+
+        const controlVisuals = { previousButton: "", nextButton: "" };
+        if (qnum == 0) {
+            controlVisuals["previousButton"] = "disabled";
+        }
+        if (qnum == quiz["questions"].length - 1) {
+            controlVisuals["nextButton"] = "disabled";
+        }
+        setControlVisuals(controlVisuals);
     }
 
     function nextQuestion() {
@@ -85,8 +102,8 @@ export default function QuizPanel() {
                 <Answer type={answerVisuals["answer2"]} answer={quiz["questions"][questionNumber]["answer2"]} onClick={() => selectAnswer("answer2")} />
                 <Answer type={answerVisuals["answer3"]} answer={quiz["questions"][questionNumber]["answer3"]} onClick={() => selectAnswer("answer3")} />
                 <Answer type={answerVisuals["answer4"]} answer={quiz["questions"][questionNumber]["answer4"]} onClick={() => selectAnswer("answer4")} />
-                <button id="navButton" onClick={() => previousQuestion()}>Previous Question</button>
-                <button style={{ float: "right" }} id="navButton" onClick={() => nextQuestion()}>Next Question</button>
+                <button id="navButton" className={controlVisuals["previousButton"]} onClick={() => previousQuestion()}>Previous Question</button>
+                <button style={{ float: "right" }} id="navButton" className={controlVisuals["nextButton"]} onClick={() => nextQuestion()}>Next Question</button>
                 </>
             }
             {!loaded &&
