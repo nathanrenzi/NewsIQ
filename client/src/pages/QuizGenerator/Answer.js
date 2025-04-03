@@ -1,10 +1,7 @@
 import React from "react";
-import "./style.css";
 
-export default function Answer() {
+export default function Answer({type, answer, onClick}) {
     return (
-        <div className="answerContainer">
-            
-        </div>
+        <button className={["answerButton", type].join(" ")} onClick={onClick}>{answer}</button>
     )
 }

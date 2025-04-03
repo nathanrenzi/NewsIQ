@@ -1,17 +1,20 @@
 :root {
     margin: 0;
-    font-family: "Roboto Condensed", sans-serif;
+    font-family: "Roboto", sans-serif;
+    color-scheme: light dark;
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    --background-color: #2C2C2C;
-    --primary-color: #E4E4E4;
-    --accent-blue: #A8DADC;
-    --accent-pink: #FFC1CC;
-    --button-purple: #B39CD0;
-}
-
-body {
+    --background-color: light-dark(#E4E4E4, #2C2C2C);
+    --background-color-light: #444444;
+    --primary-color: light-dark(#2C2C2C, #E4E4E4);
+    --accent-green: #234017;
+    --accent-green-light: #519436;
+    --accent-red: #401717;
+    --accent-red-light: #8f3434;
+    --button-blue: #13374f;
+    --button-blue-light: #21628c;
+    --transition-duration-short: 0.05s;
     background-color: var(--background-color);
     color: var(--primary-color);
 }

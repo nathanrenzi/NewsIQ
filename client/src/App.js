@@ -4,6 +4,7 @@ import {
     Routes,
     Route,
 } from "react-router-dom";
+import "./App.css"
 
 import Homepage from "./pages/Homepage/index.js";
 import QuizGenerator from "./pages/QuizGenerator/index.js";
