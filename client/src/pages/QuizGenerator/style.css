@@ -15,13 +15,14 @@
 .default {
     background-color: var(--background-color);
     color: var(--primary-color);
+    border-color: var(--background-color-light);
 }
 
 .default:hover {
     transform: scaleY(1.05) scaleX(1.01);
     cursor: pointer;
-    background-color: var(--button-blue);
-    border-color: var(--button-blue-light);
+    background-color: var(--button-primary);
+    border-color: var(--button-primary-light);
 }
 
 .noselect {
@@ -81,13 +82,13 @@ button {
     transition-duration: var(--transition-duration-short);
 }
 
-#navButton{
+.navButton{
     margin-top: 30px;
 }
 
 .disabled {
-    border-color: var(--background-color-light);
-    background-color: var(--background-color);
+    border-color: var(--background-color-light) !important;
+    background-color: var(--background-color) !important;
     color: var(--background-color-light);
 }
 
@@ -100,20 +101,19 @@ button:hover {
     transform: scale(1.05);
 }
 
-#exitButton{
+#exitButton {
     width: 40px;
     box-sizing: border-box;
     border: 2px solid var(--background-color-light);
-    background-color: var(--background-color);
     box-sizing: border-box;
     padding: 0px;
-    background: url("../../assets/images/close.svg") center no-repeat;
+    background: var(--background-color) url("../../assets/icons/close.svg") center no-repeat;
 }
 
 #exitButton:hover {
-    background-color: var(--accent-red);
     border: 2px solid var(--accent-red-light);
     color: var(--accent-red-light);
+    background: var(--accent-red) url("../../assets/icons/close-hovered.svg") center no-repeat;
 }
 
 #divider {
@@ -125,11 +125,48 @@ button:hover {
     border-radius: 1px;
 }
 
+#divider-no-margin {
+    width: 100%;
+    height: 2px;
+    background-color: var(--background-color-light);
+    margin-bottom: 30px;
+    border-radius: 1px;
+}
+
 #question {
     font-size: 2em;
     font-weight: 500;
     margin-bottom: 30px;
     padding-top: 0px;
+}
+
+#questionResultDiv {
+    display: flex;
+    height: 40px;
+    gap: 10px;
+    box-sizing: border-box;
+}
+
+.questionResult {
+    flex-grow: 1;
+    border-radius: 5px;
+    border-width: 2px;
+    border-style: solid;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#results {
+    font-size: 2em;
+    font-weight: 500;
+    margin-bottom: 30px;
+    padding-top: 0px;
+}
+
+#resultsTopDiv {
+    display: flex;
+    justify-content: center;
 }
 
 #quizPanelContainer {
@@ -148,4 +185,66 @@ button:hover {
     border-radius: 15px;
     border: 2px solid var(--primary-color);
     padding: 30px;
+}
+
+#previousButton {
+    border-color: var(--background-color-light);
+    background: url("../../assets/icons/back.svg") left 13px center no-repeat;
+    padding-left: 42px;
+}
+
+.previousButtonDisabled {
+    border-color: var(--background-color-light) !important;
+    background-color: var(--background-color) !important;
+    color: var(--background-color-light);
+    background-image: url("../../assets/icons/back-disabled.svg") !important;
+}
+
+.previousButtonDisabled:hover {
+    transform: none;
+    cursor: default;
+}
+
+#previousButton:hover {
+    border-color: var(--button-primary-light);
+    background-color: var(--button-primary);
+}
+
+#nextButton {
+    border-color: var(--background-color-light);
+    background: url("../../assets/icons/next.svg") right 13px center no-repeat;
+    padding-right: 42px;
+}
+
+#nextButton:hover {
+    border-color: var(--button-primary-light);
+    background-color: var(--button-primary);
+}
+
+.nextButtonDisabled {
+    border-color: var(--background-color-light) !important;
+    background-color: var(--background-color) !important;
+    color: var(--background-color-light);
+    background-image: url("../../assets/icons/next-disabled.svg") !important;
+}
+
+
+.nextButtonDisabled:hover {
+    transform: none;
+    cursor: default;
+}
+
+#backToArticleButton {
+    background: url("../../assets/icons/back-arrow.svg") left 13px center no-repeat;
+    padding-left: 42px;
+}
+
+#retryButton {
+    background: var(--button-primary) url("../../assets/icons/retry.svg") left 13px center no-repeat;
+    padding-left: 42px;
+}
+
+#homeButton {
+    background: var(--button-primary) url("../../assets/icons/home.svg") left 13px center no-repeat;
+    padding-left: 42px;
 }

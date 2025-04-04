@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Axios from "axios";
 
 import Answer from "./Answer.js";
 
-export default function QuizPanel() {
+export default function QuizPanel({articleId}) {
     // Stores the quiz JSON
     const [quiz, setQuiz] = useState("");
     // Stores the current question number
@@ -14,29 +15,52 @@ export default function QuizPanel() {
     const [controlVisuals, setControlVisuals] = useState({ previousButton: "", nextButton: "" });
     // Stores the selected answers for each question
     const [answersSelected, setAnswersSelected] = useState({});
-    // Stores whether the quiz has been loaded or not
+    // Stores the number of correct answers
+    const [questionsCorrect, setQuestionsCorrect] = useState(0);
+    // Stores if the quiz is loaded
     const [loaded, setLoaded] = useState(false);
-    // Stores the message to display before the quiz has been loaded
-    const [message, setMessage] = useState("Generating quiz...")
+    // Stores if an error has occurred
+    const [error, setError] = useState(false);
+    // Stores if the quiz is complete
+    const [complete, setComplete] = useState(false);
 
-    useEffect(() => {
-        // Getting the quiz JSON from the server and passing in (an unused) ArticleID parameter
-        Axios.get("http://localhost:9000/quiz?articleid=1234").then((res) => {
+    const navigate = useNavigate();
+
+    function initializeQuiz() {
+        // Getting the quiz JSON from the server and passing in the article ID
+        setError(false);
+        Axios.get(`http://localhost:9000/quiz?articleid=${articleId}`).then((res) => {
             const data = res.data;
             if (!data || data === undefined) {
                 setLoaded(false);
-                setMessage("Quiz loading failed. Please retry or exit.")
+                setError(true);
             }
             else {
                 setQuiz(data);
-                setLoaded(true);
+                initializeValues();
                 console.log(data);
             }
         }).catch((error) => {
             console.log(error);
             setLoaded(false);
-            setMessage("Quiz loading failed. Please retry or exit.")
+            setError(true);
         })
+    }
+
+    function initializeValues() {
+        setComplete(false);
+        setError(false);
+        setLoaded(true);
+        setQuestionNumber(0);
+        setQuestionsCorrect(0);
+        setAnswersSelected({});
+        setAnswerVisuals({ answer1: "default", answer2: "default", answer3: "default", answer4: "default" })
+        const controlVisuals = { previousButton: "previousButtonDisabled", nextButton: "" };
+        setControlVisuals(controlVisuals);
+    }
+
+    useEffect(() => {
+        initializeQuiz();
     }, []);
 
     function selectAnswer(selection) {
@@ -44,6 +68,12 @@ export default function QuizPanel() {
             answersSelected[questionNumber] = selection;
             setAnswersSelected(answersSelected);
             updateVisuals(questionNumber);
+            if (Object.keys(answersSelected).length == quiz["questions"].length) {
+                setComplete(true);
+            }
+            if (quiz["questions"][questionNumber]["correct"] == selection) {
+                setQuestionsCorrect(questionsCorrect + 1);
+            }
         }
     }
 
@@ -66,10 +96,10 @@ export default function QuizPanel() {
 
         const controlVisuals = { previousButton: "", nextButton: "" };
         if (qnum == 0) {
-            controlVisuals["previousButton"] = "disabled";
+            controlVisuals["previousButton"] = "previousButtonDisabled";
         }
         if (qnum == quiz["questions"].length - 1) {
-            controlVisuals["nextButton"] = "disabled";
+            controlVisuals["nextButton"] = "nextButtonDisabled";
         }
         setControlVisuals(controlVisuals);
     }
@@ -88,12 +118,33 @@ export default function QuizPanel() {
         }
     }
 
+    function getQuestionResult(qnum) {
+        const visual = answersSelected[qnum] == quiz["questions"][qnum]["correct"] ? "correct" : "incorrect";
+        const num = parseInt(qnum) + 1;
+
+        return (
+            <div key={qnum} className={[visual, "questionResult"].join(' ')}>
+                {num}
+            </div>
+        )
+    }
+
     return (
         <div id="quizPanel">
-            {loaded &&
+            {error && !loaded &&
+                <div style={{display: "flex", flexDirection: "column", alignItems: "center"}}>
+                    <a>Error generating quiz. Please retry, or try again later.</a>
+                    <div id="divider" />
+                <div style={{ display: "flex", gap: "20px" }}>
+                        <button onClick={() => initializeQuiz()} id="retryButton">Retry</button>
+                    <button onClick={() => navigate("/")} id="homeButton">Home</button>
+                </div>
+                </div>
+            }
+            {loaded && !complete && !error &&
                 <>
                 <div id="topDiv">
-                    <button style={{ backgroundImage: `${process.env.PUBLIC_URL}/images/close.svg` }} id="exitButton" />
+                    <button id="exitButton" />
                     <a style={{flexGrow: 1, paddingLeft: "10px"}}>Question {questionNumber + 1} of {quiz["questions"].length}</a>
                 </div>
                 <div id="divider" />
@@ -102,12 +153,31 @@ export default function QuizPanel() {
                 <Answer type={answerVisuals["answer2"]} answer={quiz["questions"][questionNumber]["answer2"]} onClick={() => selectAnswer("answer2")} />
                 <Answer type={answerVisuals["answer3"]} answer={quiz["questions"][questionNumber]["answer3"]} onClick={() => selectAnswer("answer3")} />
                 <Answer type={answerVisuals["answer4"]} answer={quiz["questions"][questionNumber]["answer4"]} onClick={() => selectAnswer("answer4")} />
-                <button id="navButton" className={controlVisuals["previousButton"]} onClick={() => previousQuestion()}>Previous Question</button>
-                <button style={{ float: "right" }} id="navButton" className={controlVisuals["nextButton"]} onClick={() => nextQuestion()}>Next Question</button>
+                <button id="previousButton" className={["navButton", controlVisuals["previousButton"]].join(' ')} onClick={() => previousQuestion()}>Previous Question</button>
+                <button id="nextButton" style={{ float: "right" }} className={["navButton", controlVisuals["nextButton"]].join(' ')} onClick={() => nextQuestion()}>Next Question</button>
                 </>
             }
-            {!loaded &&
-                <a>{message}</a>
+            {loaded && complete && !error &&
+                <>
+                <div id="resultsTopDiv">
+                    <a id="results">Quiz Results</a>
+                </div>
+                <div id="divider-no-margin" />
+                <div id="questionResultDiv">
+                    {Object.keys(answersSelected).map(i => getQuestionResult(i))}
+                </div>
+                <div style={{ marginTop: "30px", textAlign: "center"}}>
+                    <a>You got {questionsCorrect} out of {quiz["questions"].length} questions correct!</a>
+                </div>
+                <div style={{ marginTop: "30px", display: "flex", justifyContent: "space-between" }}>
+                    <button id="backToArticleButton" className="default">Back to article</button>
+                    <button onClick={() => initializeValues()} id="retryButton">Retry</button>
+                    <button onClick={() => navigate("/")} id="homeButton">Home</button>
+                </div>
+                </>
+            }
+            {!loaded && !error &&
+                <a>Generating quiz...</a>
             }
         </div>
     )
