@@ -1,7 +1,3 @@
-import React from "react";
+import Homepage from "./Homepage.js";
 
-export default function Homepage() {
-    return (
-        <p>Homepage!</p>
-    )
-}
+export default Homepage;

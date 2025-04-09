@@ -1,12 +1,3 @@
-import React from "react";
+import QuizGenerator from "./QuizGenerator.js";
 
-import QuizPanel from "./QuizPanel.js";
-import "./style.css";
-
-export default function QuizGenerator() {
-    return (
-        <div id="quizPanelContainer">
-            <QuizPanel />
-        </div>
-    )
-}
+export default QuizGenerator;
