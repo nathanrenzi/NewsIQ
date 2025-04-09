@@ -6,8 +6,8 @@ import {
 } from "react-router-dom";
 import "./App.css"
 
-import Homepage from "./pages/Homepage";
-import QuizGenerator from "./pages/QuizGenerator";
+import Homepage from "./pages/Homepage/Homepage.js";
+import QuizGenerator from "./pages/QuizGenerator/QuizGenerator.js";
 
 export default function App() {
     return (
