@@ -4,10 +4,11 @@ import {
     Routes,
     Route,
 } from "react-router-dom";
-import "./App.css"
+import "./App.css";
 
 import Homepage from "./pages/Homepage/Homepage.js";
 import QuizGenerator from "./pages/QuizGenerator/QuizGenerator.js";
+import ArticlePage from "./pages/ArticlePage/ArticlePage.js";
 
 export default function App() {
     return (
@@ -15,7 +16,8 @@ export default function App() {
             <BrowserRouter>
                 <Routes>
                     <Route index element={<Homepage />} />
-                    <Route path="/quiz" element={<QuizGenerator /> } />
+                    <Route path="/quiz/:url/:title" element={<QuizGenerator />} />
+                    <Route path="/article/:title" element={<ArticlePage /> } />
                 </Routes>
             </BrowserRouter>
         </div>

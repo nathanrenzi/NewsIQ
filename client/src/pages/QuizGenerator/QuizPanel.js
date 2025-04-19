@@ -4,7 +4,7 @@ import Axios from "axios";
 
 import Answer from "./Answer.js";
 
-export default function QuizPanel({articleId}) {
+export default function QuizPanel({articleURL, articleTitle}) {
     // Stores the quiz JSON
     const [quiz, setQuiz] = useState("");
     // Stores the current question number
@@ -17,6 +17,8 @@ export default function QuizPanel({articleId}) {
     const [answersSelected, setAnswersSelected] = useState({});
     // Stores the number of correct answers
     const [questionsCorrect, setQuestionsCorrect] = useState(0);
+    // Stores the number of questions
+    const [totalQuestions, setTotalQuestions] = useState(0);
     // Stores if the quiz is loaded
     const [loaded, setLoaded] = useState(false);
     // Stores if an error has occurred
@@ -29,7 +31,7 @@ export default function QuizPanel({articleId}) {
     function initializeQuiz() {
         // Getting the quiz JSON from the server and passing in the article ID
         setError(false);
-        Axios.get(`http://localhost:9000/quiz?articleid=${articleId}`).then((res) => {
+        Axios.get(`http://localhost:9000/quiz/${encodeURIComponent(articleURL)}`).then((res) => {
             const data = res.data;
             if (!data || data === undefined) {
                 setLoaded(false);
@@ -37,8 +39,7 @@ export default function QuizPanel({articleId}) {
             }
             else {
                 setQuiz(data);
-                initializeValues();
-                console.log(data);
+                initializeValues(data);
             }
         }).catch((error) => {
             console.log(error);
@@ -47,12 +48,13 @@ export default function QuizPanel({articleId}) {
         })
     }
 
-    function initializeValues() {
+    function initializeValues(data) {
         setComplete(false);
         setError(false);
         setLoaded(true);
         setQuestionNumber(0);
         setQuestionsCorrect(0);
+        setTotalQuestions(data["questions"].length);
         setAnswersSelected({});
         setAnswerVisuals({ answer1: "default", answer2: "default", answer3: "default", answer4: "default" })
         const controlVisuals = { previousButton: "previousButtonDisabled", nextButton: "" };
@@ -68,10 +70,10 @@ export default function QuizPanel({articleId}) {
             answersSelected[questionNumber] = selection;
             setAnswersSelected(answersSelected);
             updateVisuals(questionNumber);
-            if (Object.keys(answersSelected).length == quiz["questions"].length) {
+            if (Object.keys(answersSelected).length === quiz["questions"].length) {
                 setComplete(true);
             }
-            if (quiz["questions"][questionNumber]["correct"] == selection) {
+            if (quiz["questions"][questionNumber]["correct"] === selection) {
                 setQuestionsCorrect(questionsCorrect + 1);
             }
         }
@@ -81,7 +83,7 @@ export default function QuizPanel({articleId}) {
         if (qnum in answersSelected) {
             const visuals = { answer1: "noselect", answer2: "noselect", answer3: "noselect", answer4: "noselect" };
             visuals[quiz["questions"][qnum]["correct"]] = "correct-not-selected";
-            if (answersSelected[qnum] == quiz["questions"][qnum]["correct"]) {
+            if (answersSelected[qnum] === quiz["questions"][qnum]["correct"]) {
                 visuals[answersSelected[qnum]] = "correct";
             }
             else {
@@ -95,10 +97,10 @@ export default function QuizPanel({articleId}) {
         }
 
         const controlVisuals = { previousButton: "", nextButton: "" };
-        if (qnum == 0) {
+        if (qnum === 0) {
             controlVisuals["previousButton"] = "previousButtonDisabled";
         }
-        if (qnum == quiz["questions"].length - 1) {
+        if (qnum === quiz["questions"].length - 1) {
             controlVisuals["nextButton"] = "nextButtonDisabled";
         }
         setControlVisuals(controlVisuals);
@@ -118,8 +120,12 @@ export default function QuizPanel({articleId}) {
         }
     }
 
+    function backToArticle() {
+        navigate(`/article/${articleTitle}`)
+    }
+
     function getQuestionResult(qnum) {
-        const visual = answersSelected[qnum] == quiz["questions"][qnum]["correct"] ? "correct" : "incorrect";
+        const visual = answersSelected[qnum] === quiz["questions"][qnum]["correct"] ? "correct" : "incorrect";
         const num = parseInt(qnum) + 1;
 
         return (
@@ -133,8 +139,8 @@ export default function QuizPanel({articleId}) {
         <div id="quizPanel">
             {error && !loaded &&
                 <div style={{display: "flex", flexDirection: "column", alignItems: "center"}}>
-                    <a>Error generating quiz. Please retry, or try again later.</a>
-                    <div id="divider" />
+                    <div>Error generating quiz. Please retry, or try again later.</div>
+                    <div className="divider" />
                 <div style={{ display: "flex", gap: "20px" }}>
                         <button onClick={() => initializeQuiz()} id="retryButton">Retry</button>
                     <button onClick={() => navigate("/")} id="homeButton">Home</button>
@@ -144,11 +150,11 @@ export default function QuizPanel({articleId}) {
             {loaded && !complete && !error &&
                 <>
                 <div id="topDiv">
-                    <button id="exitButton" />
-                    <a style={{flexGrow: 1, paddingLeft: "10px"}}>Question {questionNumber + 1} of {quiz["questions"].length}</a>
+                    <button onClick={() => backToArticle()} id="exitButton" />
+                    <div style={{ flexGrow: 1, paddingLeft: "10px" }}>Question {questionNumber + 1} of {totalQuestions}</div>
                 </div>
-                <div id="divider" />
-                <a id="question">{quiz["questions"][questionNumber]["question"]}</a>
+                <div className="divider" />
+                <div id="question">{quiz["questions"][questionNumber]["question"]}</div>
                 <Answer type={answerVisuals["answer1"]} answer={quiz["questions"][questionNumber]["answer1"]} onClick={() => selectAnswer("answer1")} />
                 <Answer type={answerVisuals["answer2"]} answer={quiz["questions"][questionNumber]["answer2"]} onClick={() => selectAnswer("answer2")} />
                 <Answer type={answerVisuals["answer3"]} answer={quiz["questions"][questionNumber]["answer3"]} onClick={() => selectAnswer("answer3")} />
@@ -160,24 +166,24 @@ export default function QuizPanel({articleId}) {
             {loaded && complete && !error &&
                 <>
                 <div id="resultsTopDiv">
-                    <a id="results">Quiz Results</a>
+                    <div id="results">Quiz Results</div>
                 </div>
-                <div id="divider-no-margin" />
+                <div className="divider-no-margin" />
                 <div id="questionResultDiv">
                     {Object.keys(answersSelected).map(i => getQuestionResult(i))}
                 </div>
                 <div style={{ marginTop: "30px", textAlign: "center"}}>
-                    <a>You got {questionsCorrect} out of {quiz["questions"].length} questions correct!</a>
+                    <div>You got {questionsCorrect} out of {totalQuestions} questions correct!</div>
                 </div>
                 <div style={{ marginTop: "30px", display: "flex", justifyContent: "space-between" }}>
-                    <button id="backToArticleButton" className="default">Back to article</button>
+                    <button onClick={() => backToArticle()} id="backToArticleButton" className="default">Back to article</button>
                     <button onClick={() => initializeValues()} id="retryButton">Retry</button>
                     <button onClick={() => navigate("/")} id="homeButton">Home</button>
                 </div>
                 </>
             }
             {!loaded && !error &&
-                <a>Generating quiz...</a>
+                <div>Generating quiz...</div>
             }
         </div>
     )
