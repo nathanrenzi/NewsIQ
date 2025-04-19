@@ -15,6 +15,7 @@ export default function ArticlePage() {
             .then((res) => {
                 setArticle(res.data);
                 setLoaded(true);
+                setNotFound(false);
             })
             .catch((error) => {
                 setLoaded(false);
