@@ -36,7 +36,7 @@ const Feed = () => {
 
   return (
     <div className="feed-container">
-      <h1 className="feed-title">NewIQ</h1>
+      <h1 className="feed-title">NewsIQ</h1>
       <div className="search-bar-container">
         <input
           type="text"
