@@ -9,9 +9,10 @@ const sanitizeHtml = require("sanitize-html")
 
 app.use(express.json());
 app.use(cors());
-app.listen(9000, () => {
-    console.log(`Server started on port ${9000}`);
+app.listen(9001, () => {
+    console.log(`Server started on port ${9001}`);
 })
+console.log("Server is starting...");
 
 // Used to provide an example to the AI model
 const exampleArticle = "NASA has announced a groundbreaking initiative to establish a nuclear fission power plant on the Moon by 2035, aiming to support long-term human missions and potential lunar colonization. The project, developed in collaboration with the Department of Energy and private industry, will provide a consistent energy source for astronauts, reducing reliance on solar power in the harsh lunar environment. Engineers plan to design a compact yet powerful reactor capable of operating in extreme temperatures and extended lunar nights.The system will be tested on Earth before deployment, ensuring safety and efficiency. Officials say this innovation could pave the way for Mars missions and further deep - space exploration.If successful, it may also accelerate nuclear advancements for sustainable energy on Earth.The first prototype is expected to launch for testing within the next decade."
@@ -97,8 +98,13 @@ async function getArticleContentHtml(url) {
 // Documentation for NewsAPI
 // https://newsapi.org/docs
 
+app.get('/fetchNewsApiKey', (req, res) => {
+    res.json({ apiKey: process.env.NEWS_API_KEY });
+  });
+  
+
 const fetchArticle = async (title) => {
-    const apiKey = process.env.NEWS_API_KEY;
+    const apiKey = process.env.NEWS_API_KEY;;
     var url = "https://newsapi.org/v2/everything?" +
         `q=${encodeURIComponent(title)}&` +
         "sortBy=relevancy&pageSize=1&language=en&" +
@@ -136,4 +142,4 @@ app.get("/article/:title", async (req, res) => {
     else {
         res.status(404).send("No article found.");
     }
-})
+}) 
