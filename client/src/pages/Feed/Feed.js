@@ -36,7 +36,12 @@ const Feed = () => {
 
   return (
     <div className="feed-container">
-      <h1 className="feed-title">NewsIQ</h1>
+      <header className="top-bar">
+        <button className="profile-button" onClick={() => navigate("/profile")}>Profile</button>
+        <span className="logo">NewsIQ</span>
+        <button className="auth-button" onClick={() => navigate("/auth")}>Login/Signup</button>
+      </header>
+
       <div className="search-bar-container">
         <input
           type="text"

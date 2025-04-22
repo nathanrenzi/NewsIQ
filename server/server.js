@@ -103,8 +103,46 @@ app.get('/fetchNewsApiKey', (req, res) => {
   });
   
 
+// Function to categorize article content
+const categorizeArticle = async (content) => {
+    const apiKey = process.env.OPENAI_API_KEY;
+    if (!content) {
+        return "Uncategorized";
+    }
+    
+    try {
+        const response = await fetch("https://api.openai.com/v1/chat/completions", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${apiKey}`
+            },
+            body: JSON.stringify({
+                model: "gpt-4o-mini",
+                messages: [
+                    {
+                        "role": "system",
+                        "content": "You are a content categorizer. Given the content of an article, categorize it into one of these broad categories: Politics, Technology, Science, Business, Entertainment, Sports, Health, or Other. Respond with ONLY the category name, nothing else."
+                    },
+                    {
+                        "role": "user",
+                        "content": content
+                    }
+                ],
+                temperature: 0.3
+            })
+        });
+
+        const data = await response.json();
+        return data.choices[0].message.content.trim();
+    } catch (error) {
+        console.error("Error categorizing article:", error);
+        return "Uncategorized";
+    }
+}
+
 const fetchArticle = async (title) => {
-    const apiKey = process.env.NEWS_API_KEY;;
+    const apiKey = process.env.NEWS_API_KEY;
     var url = "https://newsapi.org/v2/everything?" +
         `q=${encodeURIComponent(title)}&` +
         "sortBy=relevancy&pageSize=1&language=en&" +
@@ -124,13 +162,16 @@ const fetchArticle = async (title) => {
         });
     if (!article) return null;
     const html = await getArticleContentHtml(article.url);
+    const content = await getArticleContent(article.url);
+    const category = await categorizeArticle(content);
     return {
         title: article.title,
         description: article.description,
         authors: article.source.name,
         url: article.url,
         urlToImage: article.urlToImage,
-        html: html
+        html: html,
+        category: category
     };
 }
 

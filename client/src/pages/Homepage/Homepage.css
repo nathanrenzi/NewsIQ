@@ -6,12 +6,32 @@
     position: fixed;
     top: 0;
     left: 0;
+    display: flex;
+    align-items: center;
   }
   
   .top-bar .logo {
     font-weight: bold;
     font-size: 1.5em;
     color: var(--primary-color);
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .profile-button {
+    background-color: transparent;
+    border: 2px solid var(--primary-color);
+    color: var(--primary-color);
+    padding: 8px 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 1em;
+    transition: all 0.2s ease;
+  }
+
+  .profile-button:hover {
+    background-color: var(--primary-color);
+    color: #e796fc;
   }
   
   .homepage-container {

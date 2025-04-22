@@ -72,11 +72,41 @@ export default function QuizPanel({articleURL, articleTitle}) {
             updateVisuals(questionNumber);
             if (Object.keys(answersSelected).length === quiz["questions"].length) {
                 setComplete(true);
+                // Save score to localStorage when quiz is completed
+                const percentage = Math.round((questionsCorrect + (quiz["questions"][questionNumber]["correct"] === selection ? 1 : 0)) / quiz["questions"].length * 100);
+                saveScore(articleTitle, percentage);
             }
             if (quiz["questions"][questionNumber]["correct"] === selection) {
                 setQuestionsCorrect(questionsCorrect + 1);
             }
         }
+    }
+
+    function saveScore(category, percentage) {
+        // Get existing scores from localStorage
+        const storedScores = localStorage.getItem('quizScores');
+        let scores = storedScores ? JSON.parse(storedScores) : [];
+        
+        // Check if category already exists
+        const existingScoreIndex = scores.findIndex(score => score.category === category);
+        
+        if (existingScoreIndex !== -1) {
+            // Update existing category score (average of old and new)
+            const oldScore = scores[existingScoreIndex];
+            scores[existingScoreIndex] = {
+                category: category,
+                percentage: Math.round((oldScore.percentage + percentage) / 2)
+            };
+        } else {
+            // Add new category score
+            scores.push({
+                category: category,
+                percentage: percentage
+            });
+        }
+        
+        // Save updated scores to localStorage
+        localStorage.setItem('quizScores', JSON.stringify(scores));
     }
 
     function updateVisuals(qnum) {

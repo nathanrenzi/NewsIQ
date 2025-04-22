@@ -11,7 +11,7 @@ export default function ArticlePage() {
     const { title } = useParams();
 
     useEffect(() => {
-        axios.get(`http://localhost:9001/article/:${title}`)
+        axios.get(`http://localhost:9001/article/${title}`)
             .then((res) => {
                 setArticle(res.data);
                 setLoaded(true);
@@ -25,7 +25,7 @@ export default function ArticlePage() {
 
     const navigateToQuiz = () => {
         if (!article) return;
-        navigate(`/quiz/${encodeURIComponent(article.url)}/$${encodeURIComponent(article.title)}`);
+        navigate(`/quiz/${encodeURIComponent(article.url)}/${encodeURIComponent(article.category)}`);
     }
 
     return (

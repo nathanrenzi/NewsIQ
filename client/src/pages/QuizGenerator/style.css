@@ -197,6 +197,9 @@ button:hover {
     border-color: var(--background-color-light);
     background: url("../../assets/icons/next.svg") right 13px center no-repeat;
     padding-right: 42px;
+    background-color: #4a90e2;
+    border-color: #357abd;
+    color: white;
 }
 
 #nextButton:hover {
@@ -211,7 +214,6 @@ button:hover {
     background-image: url("../../assets/icons/next-disabled.svg") !important;
 }
 
-
 .nextButtonDisabled:hover {
     transform: none;
     cursor: default;
@@ -220,14 +222,23 @@ button:hover {
 #backToArticleButton {
     background: url("../../assets/icons/back-arrow.svg") left 13px center no-repeat;
     padding-left: 42px;
+    background-color: #4a90e2;
+    border-color: #357abd;
+    color: white;
 }
 
 #retryButton {
     background: var(--button-primary) url("../../assets/icons/retry.svg") left 13px center no-repeat;
     padding-left: 42px;
+    background-color: #4a90e2;
+    border-color: #357abd;
+    color: white;
 }
 
 #homeButton {
     background: var(--button-primary) url("../../assets/icons/home.svg") left 13px center no-repeat;
     padding-left: 42px;
+    background-color: #4a90e2;
+    border-color: #357abd;
+    color: white;
 }
