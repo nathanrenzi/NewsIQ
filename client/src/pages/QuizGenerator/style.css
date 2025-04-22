@@ -116,23 +116,6 @@ button:hover {
     background: var(--accent-red) url("../../assets/icons/close-hovered.svg") center no-repeat;
 }
 
-#divider {
-    width: 100%;
-    height: 2px;
-    background-color: var(--background-color-light);
-    margin-top: 30px;
-    margin-bottom: 30px;
-    border-radius: 1px;
-}
-
-#divider-no-margin {
-    width: 100%;
-    height: 2px;
-    background-color: var(--background-color-light);
-    margin-bottom: 30px;
-    border-radius: 1px;
-}
-
 #question {
     font-size: 2em;
     font-weight: 500;
