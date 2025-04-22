@@ -11,7 +11,7 @@ export default function ArticlePage() {
     const { title } = useParams();
 
     useEffect(() => {
-        axios.get(`http://localhost:9000/article/:${title}`)
+        axios.get(`http://localhost:9001/article/:${title}`)
             .then((res) => {
                 setArticle(res.data);
                 setLoaded(true);
