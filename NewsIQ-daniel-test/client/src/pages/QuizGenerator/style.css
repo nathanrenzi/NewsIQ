@@ -1,0 +1,244 @@
+.answerButton {
+    font-family: inherit;
+    margin-top: 20px;
+    width: 100%;
+    height: 50px;
+    border-radius: 10px;
+    border: 2px solid var(--background-color-light);
+    transition-duration: var(--transition-duration-short);
+    align-content: center;
+    align-items: center;
+    padding-left: 10px;
+    box-sizing: border-box;
+}
+
+.default {
+    background-color: var(--background-color);
+    color: var(--primary-color);
+    border-color: var(--background-color-light);
+}
+
+.default:hover {
+    transform: scaleY(1.05) scaleX(1.01);
+    cursor: pointer;
+    background-color: var(--button-primary);
+    border-color: var(--button-primary-light);
+}
+
+.noselect {
+    background-color: var(--background-color);
+    color: var(--background-color-light);
+}
+
+.noselect:hover {
+    transform: none;
+    cursor: default;
+}
+
+.correct{
+    background-color: var(--accent-green);
+    border-color: var(--accent-green-light);
+}
+
+.correct:hover {
+    transform: none;
+    cursor: default;
+}
+
+.correct-not-selected {
+    background-color: var(--background-color);
+    color: var(--accent-green-light);
+    border-color: var(--accent-green);
+}
+
+.correct-not-selected:hover {
+    transform: none;
+    cursor: default;
+}
+
+.incorrect{
+    background-color: var(--accent-red);
+    border-color: var(--accent-red-light);
+    color: var(--accent-red-light);
+}
+
+.incorrect:hover {
+    transform: none;
+    cursor: default;
+}
+
+#topDiv {
+    align-items: center;
+    width: 100%;
+    display: flex;
+}
+
+button {
+    font-size: 1em;
+    height: 40px;
+    padding-left: 20px;
+    padding-right: 20px;
+    border-radius: 10px;
+    transition-duration: var(--transition-duration-short);
+}
+
+.navButton{
+    margin-top: 30px;
+}
+
+.disabled {
+    border-color: var(--background-color-light) !important;
+    background-color: var(--background-color) !important;
+    color: var(--background-color-light);
+}
+
+.disabled:hover {
+    transform: none;
+    cursor: default;
+}
+
+button:hover {
+    transform: scale(1.05);
+}
+
+#exitButton {
+    width: 40px;
+    box-sizing: border-box;
+    border: 2px solid var(--background-color-light);
+    box-sizing: border-box;
+    padding: 0px;
+    background: var(--background-color) url("../../assets/icons/close.svg") center no-repeat;
+}
+
+#exitButton:hover {
+    border: 2px solid var(--accent-red-light);
+    color: var(--accent-red-light);
+    background: var(--accent-red) url("../../assets/icons/close-hovered.svg") center no-repeat;
+}
+
+#question {
+    font-size: 2em;
+    font-weight: 500;
+    margin-bottom: 30px;
+    padding-top: 0px;
+}
+
+#questionResultDiv {
+    display: flex;
+    height: 40px;
+    gap: 10px;
+    box-sizing: border-box;
+}
+
+.questionResult {
+    flex-grow: 1;
+    border-radius: 5px;
+    border-width: 2px;
+    border-style: solid;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#results {
+    font-size: 2em;
+    font-weight: 500;
+    margin-bottom: 30px;
+    padding-top: 0px;
+}
+
+#resultsTopDiv {
+    display: flex;
+    justify-content: center;
+}
+
+#quizPanelContainer {
+    margin-top: 100px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#quizPanel {
+    width: 30%;
+    min-width: 400px;
+    max-width: 600px;
+    border-radius: 15px;
+    border: 2px solid var(--primary-color);
+    padding: 30px;
+}
+
+#previousButton {
+    border-color: var(--background-color-light);
+    background: url("../../assets/icons/back.svg") left 13px center no-repeat;
+    padding-left: 42px;
+}
+
+.previousButtonDisabled {
+    border-color: var(--background-color-light) !important;
+    background-color: var(--background-color) !important;
+    color: var(--background-color-light);
+    background-image: url("../../assets/icons/back-disabled.svg") !important;
+}
+
+.previousButtonDisabled:hover {
+    transform: none;
+    cursor: default;
+}
+
+#previousButton:hover {
+    border-color: var(--button-primary-light);
+    background-color: var(--button-primary);
+}
+
+#nextButton {
+    border-color: var(--background-color-light);
+    background: url("../../assets/icons/next.svg") right 13px center no-repeat;
+    padding-right: 42px;
+    background-color: #4a90e2;
+    border-color: #357abd;
+    color: white;
+}
+
+#nextButton:hover {
+    border-color: var(--button-primary-light);
+    background-color: var(--button-primary);
+}
+
+.nextButtonDisabled {
+    border-color: var(--background-color-light) !important;
+    background-color: var(--background-color) !important;
+    color: var(--background-color-light);
+    background-image: url("../../assets/icons/next-disabled.svg") !important;
+}
+
+.nextButtonDisabled:hover {
+    transform: none;
+    cursor: default;
+}
+
+#backToArticleButton {
+    background: url("../../assets/icons/back-arrow.svg") left 13px center no-repeat;
+    padding-left: 42px;
+    background-color: #4a90e2;
+    border-color: #357abd;
+    color: white;
+}
+
+#retryButton {
+    background: var(--button-primary) url("../../assets/icons/retry.svg") left 13px center no-repeat;
+    padding-left: 42px;
+    background-color: #4a90e2;
+    border-color: #357abd;
+    color: white;
+}
+
+#homeButton {
+    background: var(--button-primary) url("../../assets/icons/home.svg") left 13px center no-repeat;
+    padding-left: 42px;
+    background-color: #4a90e2;
+    border-color: #357abd;
+    color: white;
+}
