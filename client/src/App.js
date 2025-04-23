@@ -19,7 +19,7 @@ export default function App() {
                 <Routes>
                     <Route index element={<Feed />} />
                     <Route path="/auth" element={<Homepage />} />
-                    <Route path="/quiz/:url/:title" element={<QuizGenerator />} />
+                    <Route path="/quiz/:url/:category/:title" element={<QuizGenerator />} />
                     <Route path="/article/:title" element={<ArticlePage /> } />
                     <Route path="/profile" element={<Profile />} />
                 </Routes>

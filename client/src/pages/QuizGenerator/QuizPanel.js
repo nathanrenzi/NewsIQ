@@ -4,7 +4,7 @@ import Axios from "axios";
 
 import Answer from "./Answer.js";
 
-export default function QuizPanel({articleURL, articleTitle}) {
+export default function QuizPanel({articleURL, articleCategory, articleTitle}) {
     // Stores the quiz JSON
     const [quiz, setQuiz] = useState("");
     // Stores the current question number
@@ -74,7 +74,7 @@ export default function QuizPanel({articleURL, articleTitle}) {
                 setComplete(true);
                 // Save score to localStorage when quiz is completed
                 const percentage = Math.round((questionsCorrect + (quiz["questions"][questionNumber]["correct"] === selection ? 1 : 0)) / quiz["questions"].length * 100);
-                saveScore(articleTitle, percentage);
+                saveScore(percentage);
             }
             if (quiz["questions"][questionNumber]["correct"] === selection) {
                 setQuestionsCorrect(questionsCorrect + 1);
@@ -82,25 +82,25 @@ export default function QuizPanel({articleURL, articleTitle}) {
         }
     }
 
-    function saveScore(category, percentage) {
+    function saveScore(percentage) {
         // Get existing scores from localStorage
         const storedScores = localStorage.getItem('quizScores');
         let scores = storedScores ? JSON.parse(storedScores) : [];
         
         // Check if category already exists
-        const existingScoreIndex = scores.findIndex(score => score.category === category);
+        const existingScoreIndex = scores.findIndex(score => score.category === articleCategory);
         
         if (existingScoreIndex !== -1) {
             // Update existing category score (average of old and new)
             const oldScore = scores[existingScoreIndex];
             scores[existingScoreIndex] = {
-                category: category,
+                category: articleCategory,
                 percentage: Math.round((oldScore.percentage + percentage) / 2)
             };
         } else {
             // Add new category score
             scores.push({
-                category: category,
+                category: articleCategory,
                 percentage: percentage
             });
         }

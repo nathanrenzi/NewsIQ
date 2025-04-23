@@ -4,11 +4,11 @@ import QuizPanel from "./QuizPanel.js";
 import "./style.css";
 
 export default function QuizGenerator() {
-    const { url, title } = useParams();
+    const { url, category, title } = useParams();
 
     return (
         <div id="quizPanelContainer">
-            <QuizPanel articleURL={url} articleTitle={title} />
+            <QuizPanel articleURL={url} articleCategory={category} articleTitle={title} />
         </div>
     )
 }

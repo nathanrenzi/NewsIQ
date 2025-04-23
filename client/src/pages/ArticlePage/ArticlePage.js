@@ -25,7 +25,7 @@ export default function ArticlePage() {
 
     const navigateToQuiz = () => {
         if (!article) return;
-        navigate(`/quiz/${encodeURIComponent(article.url)}/${encodeURIComponent(article.category)}`);
+        navigate(`/quiz/${encodeURIComponent(article.url)}/${encodeURIComponent(article.category)}/${encodeURIComponent(article.title)}`);
     }
 
     return (
