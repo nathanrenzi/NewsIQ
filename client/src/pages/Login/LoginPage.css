@@ -19,41 +19,40 @@
     font-weight: bold;
     color: var(--primary-color);
   }
-  
-  /* center the form under the header */
-  .signup-container {
+  /* centers the form under header */
+  .login-container {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     gap: 20px;
-    padding-top: 20px;     /* space below title */
-    height: calc(100vh - 60px - 40px); /* adjust for header + title */
+    padding-top: 20px;     
+    height: calc(100vh - 60px - 40px); 
     box-sizing: border-box;
   }
   
-  /* make inputs match auth‑box style */
-  .signup-input {
+  /* makes inputs look like authorization boxes */
+  .login-input {
     display: inline-block;
     width: 90%;
     max-width: 400px;
-    height: 50px;                    /* same height */
-    padding: 0 30px;                 /* same horizontal padding */
-    font-size: 1.1em;                /* match font size */
-    border: 2px solid #e796fc;       /* purple border */
+    height: 50px;                    
+    padding: 0 30px;  /* horizontal padding */
+    font-size: 1.1em;                
+    border: 2px solid #e796fc; /* purple border */
     border-radius: 6px;
     background: transparent;
     color: var(--primary-color);
-    text-align: center;              /* placeholder centered */
+    text-align: center;              /* centers the text */
     box-sizing: border-box;
   }
   
   /* placeholder color */
-  .signup-input::placeholder {
+  .login-input::placeholder {
     color: var(--background-color-light);
   }
   
-  /* container for “Log in?” link + submit button */
+  /* container for the sign-up link + submit button */
   .actions-container {
     display: flex;
     gap: 10px;
@@ -61,7 +60,7 @@
     max-width: 400px;
   }
   
-  /* “Log in?” box */
+  /* “Sign up?” box */
   .action-box {
     flex: 1;
     text-align: center;
@@ -91,4 +90,15 @@
   }
   .submit-button:hover {
     background-color: rgba(0, 0, 0, 0.05);
+  }
+  
+  /* “Forgot Password?” link */
+  .forgot-link {
+    margin-top: 10px;
+    font-size: 0.9em;
+    color: var(--button-primary);
+    text-decoration: none;
+  }
+  .forgot-link:hover {
+    text-decoration: underline;
   }

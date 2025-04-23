@@ -1,27 +1,29 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
-import "./SignUpPage.css";
+import "./LoginPage.css";
 
-export default function SignUpPage() {
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
+export default function LoginPage() {
+  // For form inputs & error message
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  // Help avigates to other routes
   const navigate = useNavigate();
 
+  // Handles form submissions
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
     try {
-        await axios.post("http://localhost:9001/signup", { 
-            firstName, lastName, username, password 
-        });
-
+      // Login request
+      await axios.post("http://localhost:9001/login", { 
+        username, password 
+      });
+      // Navigates to user's profile if successful
       navigate("/profile");
     } catch (err) {
-      setError(err.response?.data?.error || "Signup failed");
+      setError(err.response?.data?.error || "Login failed");
     }
   };
 
@@ -31,28 +33,12 @@ export default function SignUpPage() {
         <span className="logo">NewsIQ</span>
       </header>
 
-      <form className="signup-container" onSubmit={handleSubmit}>
-        <h1 className="page-title">Sign Up</h1>
+      <form className="login-container" onSubmit={handleSubmit}>
+        <h1 className="page-title">Log in</h1>
 
         <input
           type="text"
-          className="signup-input"
-          placeholder="Enter First Name..."
-          value={firstName}
-          onChange={e => setFirstName(e.target.value)}
-          required
-        />
-        <input
-          type="text"
-          className="signup-input"
-          placeholder="Enter Last Name..."
-          value={lastName}
-          onChange={e => setLastName(e.target.value)}
-          required
-        />
-        <input
-          type="text"
-          className="signup-input"
+          className="login-input"
           placeholder="Enter Username..."
           value={username}
           onChange={e => setUsername(e.target.value)}
@@ -60,23 +46,26 @@ export default function SignUpPage() {
         />
         <input
           type="password"
-          className="signup-input"
+          className="login-input"
           placeholder="Enter Password..."
           value={password}
           onChange={e => setPassword(e.target.value)}
           required
         />
-
         {error && <div className="form-error">{error}</div>}
 
         <div className="actions-container">
-          <Link to="/login" className="action-box">
-            Log in?
+          <Link to="/signup" className="action-box">
+            Sign up?
           </Link>
           <button type="submit" className="submit-button">
             Submit
           </button>
         </div>
+
+        <Link to="/forgot-password" className="forgot-link">
+          Forgot Password?
+        </Link>
       </form>
     </>
   );
