@@ -42,6 +42,8 @@
 .homeButton {
     margin-top: 20px;
     width: 150px;
+    background-color: #4a90e2;
+    color: #E4E4E4;
 }
 
 .loading {
