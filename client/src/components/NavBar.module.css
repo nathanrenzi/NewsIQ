@@ -1,0 +1,62 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
+.container {
+    background-color: var(--main-color);
+    width: 100%;
+    padding: 10px 20px;
+    box-sizing: border-box;
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: flex;
+    align-items: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+    z-index: 10;
+}
+
+.logo {
+    font-size: 2em;
+    font-family: "Poppins", sans-serif;
+    background-color: transparent;
+    border: none;
+    text-align: left;
+    cursor: pointer;
+    color: var(--text-color);
+}
+
+.logo:hover {
+    transform: scale(1.03);
+}
+
+.profileButton {
+    width: 45px;
+    height: 45px;
+    border: 2px solid var(--text-color);
+    border-radius: 22.5px;
+    background: var(--text-color-dark) url("../assets/icons/user.svg") no-repeat center;
+    background-size: 30px;
+    cursor: pointer;
+    transition-duration: var(--transition-duration-short);
+    margin-left: auto;
+}
+
+.profileButton:hover {
+    transform: scale(1.05);
+}
+
+.loginButton {
+    width: 150px;
+    height: 45px;
+    border: 2px solid var(--text-color);
+    border-radius: 10px;
+    background-color: transparent;
+    cursor: pointer;
+    transition-duration: var(--transition-duration-short);
+    margin-left: auto;
+    font-size: 1em;
+    color: var(--text-color);
+}
+
+.loginButton:hover {
+    transform: scale(1.05);
+}

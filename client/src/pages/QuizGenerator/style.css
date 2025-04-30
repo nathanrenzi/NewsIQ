@@ -14,15 +14,15 @@
 
 .default {
     background-color: var(--background-color);
-    color: var(--primary-color);
+    color: var(--text-color);
     border-color: var(--background-color-light);
 }
 
 .default:hover {
     transform: scaleY(1.05) scaleX(1.01);
     cursor: pointer;
-    background-color: #4a90e2;
-    border-color: var(--button-primary-light);
+    background-color: var(--main-color);
+    border-color: var(--main-color-light);
 }
 
 .noselect {
@@ -38,7 +38,7 @@
 .correct {
     background-color: var(--accent-green);
     border-color: var(--accent-green-light);
-    color: #E4E4E4;
+    color: var(--text-color);
 }
 
 .correct:hover {
@@ -74,17 +74,21 @@
     display: flex;
 }
 
-button {
-    font-size: 1em;
-    height: 40px;
+
+.navButton {
+    margin-top: 30px;
     padding-left: 20px;
     padding-right: 20px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border: 2px solid;
     border-radius: 10px;
     transition-duration: var(--transition-duration-short);
+    cursor: pointer;
 }
 
-.navButton{
-    margin-top: 30px;
+.navButton:hover {
+    transform: scale(1.03);
 }
 
 .disabled {
@@ -98,17 +102,16 @@ button {
     cursor: default;
 }
 
-button:hover {
-    transform: scale(1.05);
-}
-
 #exitButton {
     width: 40px;
+    height: 40px;
     box-sizing: border-box;
     border: 2px solid var(--background-color-light);
+    border-radius: 10px;
     box-sizing: border-box;
     padding: 0px;
     background: var(--background-color) url("../../assets/icons/close.svg") center no-repeat;
+    cursor: pointer;
 }
 
 #exitButton:hover {
@@ -167,22 +170,22 @@ button:hover {
     min-width: 400px;
     max-width: 600px;
     border-radius: 15px;
-    border: 2px solid var(--primary-color);
+    border: 2px solid var(--text-color);
     padding: 30px;
 }
 
 #previousButton {
     background: url("../../assets/icons/back.svg") left 13px center no-repeat;
-    background-color: #4a90e2;
-    border-color: #357abd;
-    color: #E4E4E4;
+    background-color: var(--main-color);
+    border-color: var(--main-color);
+    color: var(--text-color);
     padding-left: 42px;
 }
 
 .previousButtonDisabled {
     border-color: var(--background-color-light) !important;
     background-color: var(--background-color) !important;
-    color: var(--primary-color) !important;
+    color: var(--text-color) !important;
     background-image: url("../../assets/icons/back-disabled.svg") !important;
 }
 
@@ -192,28 +195,28 @@ button:hover {
 }
 
 #previousButton:hover {
-    border-color: var(--button-primary-light);
-    background-color: var(--button-primary);
+    border-color: var(--main-color-light);
+    background-color: var(--main-color-light);
 }
 
 #nextButton {
     border-color: var(--background-color-light);
     background: url("../../assets/icons/next.svg") right 13px center no-repeat;
     padding-right: 42px;
-    background-color: #4a90e2;
-    border-color: #357abd;
+    background-color: var(--main-color);
+    border-color: var(--main-color);
     color: white;
 }
 
 #nextButton:hover {
-    border-color: var(--button-primary-light);
-    background-color: var(--button-primary);
+    border-color: var(--main-color-light);
+    background-color: var(--main-color-light);
 }
 
 .nextButtonDisabled {
     border-color: var(--background-color-light) !important;
     background-color: var(--background-color) !important;
-    color: var(--primary-color) !important;
+    color: var(--text-color) !important;
     background-image: url("../../assets/icons/next-disabled.svg") !important;
 }
 
@@ -225,23 +228,44 @@ button:hover {
 #backToArticleButton {
     background: url("../../assets/icons/back-arrow.svg") left 13px center no-repeat;
     padding-left: 42px;
-    background-color: #4a90e2;
-    border-color: #357abd;
+    background-color: var(--main-color);
+    border: 2px solid var(--main-color);
+    border-radius: 10px;
+    height: 40px;
     color: white;
 }
 
 #retryButton {
-    background: var(--button-primary) url("../../assets/icons/retry.svg") left 13px center no-repeat;
+    background: var(--main-color) url("../../assets/icons/retry.svg") left 13px center no-repeat;
     padding-left: 42px;
-    background-color: #4a90e2;
-    border-color: #357abd;
+    background-color: var(--main-color);
+    border: 2px solid var(--main-color);
+    border-radius: 10px;
+    height: 40px;
     color: white;
 }
 
 #homeButton {
-    background: var(--button-primary) url("../../assets/icons/home.svg") left 13px center no-repeat;
+    background: var(--main-color) url("../../assets/icons/home.svg") left 13px center no-repeat;
     padding-left: 42px;
-    background-color: #4a90e2;
-    border-color: #357abd;
+    background-color: var(--main-color);
+    border: 2px solid var(--main-color);
+    border-radius: 10px;
+    height: 40px;
     color: white;
+}
+
+.quizEndButton {
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border: 2px solid;
+    border-radius: 10px;
+    transition-duration: var(--transition-duration-short);
+    cursor: pointer;
+}
+
+.quizEndButton:hover {
+    transform: scale(1.03);
 }

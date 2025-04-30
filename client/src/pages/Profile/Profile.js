@@ -26,7 +26,7 @@ export default function Profile() {
                         scores.map((score, index) => (
                             <div key={index} className={styles.scoreCard}>
                                 <h2 className={styles.category}>{score.category}</h2>
-                                <div className={styles.percentage}>{score.percentage}%</div>
+                                <div className={score.percentage < 50 ? styles.badPercentage : styles.goodPercentage}>{score.percentage}%</div>
                             </div>
                         ))
                     ) : (

@@ -37,8 +37,8 @@ export default function ArticlePage() {
                 {loaded && !notFound &&
                     <>
                     <h1 className={styles.header}>{article.title}</h1>
-                    <div className={styles.authors}><span style={{ color: "var(--primary-color-dark)" }}>Author:</span> {article.authors}</div>
-                    <div className={styles.authors}><span style={{ color: "var(--primary-color-dark)" }}>Original Article:</span> <a href={article.url} target="_blank">Link</a></div>
+                    <div className={styles.authors}><span style={{ color: "var(--text-color-dark)" }}>Author:</span> {article.authors}</div>
+                    <div className={styles.authors}><span style={{ color: "var(--text-color-dark)" }}>Original Article:</span> <a className={styles.link} href={article.url} target="_blank">Link</a></div>
                     <img className={styles.image} src={article.urlToImage} />
                     <div className={styles.content} dangerouslySetInnerHTML={{ __html: article.html }} />
                     <button onClick={navigateToQuiz} className={styles.quizButton}>Take a quiz on this article!</button>

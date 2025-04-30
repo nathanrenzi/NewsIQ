@@ -27,11 +27,7 @@ export default function SignUpPage() {
 
   return (
     <>
-      <header className="top-bar">
-        <span className="logo">NewsIQ</span>
-      </header>
-
-      <form className="signup-container" onSubmit={handleSubmit}>
+      <form id="flexContainer" className="signup-container" onSubmit={handleSubmit}>
         <h1 className="page-title">Sign Up</h1>
 
         <input
@@ -67,13 +63,13 @@ export default function SignUpPage() {
           required
         />
 
-        {error && <div className="form-error">{error}</div>}
+        {error && <div className="signup-form-error">{error}</div>}
 
-        <div className="actions-container">
-          <Link to="/login" className="action-box">
+        <div className="signup-actions-container">
+          <Link to="/login" className="signup-action-box">
             Log in?
           </Link>
-          <button type="submit" className="submit-button">
+          <button type="submit" className="signup-submit-button">
             Submit
           </button>
         </div>

@@ -29,12 +29,8 @@ export default function LoginPage() {
 
   return (
     <>
-      <header className="top-bar">
-        <span className="logo">NewsIQ</span>
-      </header>
-
-      <form className="login-container" onSubmit={handleSubmit}>
-        <h1 className="page-title">Log in</h1>
+      <form id="flexContainer" className="login-container" onSubmit={handleSubmit}>
+        <h1 className="login-page-title">Log in</h1>
 
         <input
           type="text"
@@ -52,18 +48,18 @@ export default function LoginPage() {
           onChange={e => setPassword(e.target.value)}
           required
         />
-        {error && <div className="form-error">{error}</div>}
+        {error && <div className="login-form-error">{error}</div>}
 
-        <div className="actions-container">
-          <Link to="/signup" className="action-box">
+        <div className="login-actions-container">
+          <Link to="/signup" className="login-action-box">
             Sign up?
           </Link>
-          <button type="submit" className="submit-button">
+          <button type="submit" className="login-submit-button">
             Submit
           </button>
         </div>
 
-        <Link to="/forgot-password" className="forgot-link">
+        <Link to="/forgot-password" className="login-forgot-link">
           Forgot Password?
         </Link>
       </form>

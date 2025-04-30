@@ -1,94 +1,76 @@
-/* purple top bar */
-.top-bar {
-    background-color: #e796fc;
-    width: 100%;
-    padding: 10px 20px;
-    position: fixed;
-    top: 0; left: 0;
-    box-sizing: border-box;
-  }
-  .top-bar .logo {
-    font-weight: bold;
-    font-size: 1.5em;
-    color: var(--primary-color);
-  }
-  .page-title {
-    margin-top: 60px;      
+
+.signup-page-title {
     text-align: center;
     font-size: 2em;
     font-weight: bold;
-    color: var(--primary-color);
-  }
-  
-  /* center the form under the header */
-  .signup-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 20px;
-    padding-top: 20px;     /* space below title */
-    height: calc(100vh - 60px - 40px); /* adjust for header + title */
-    box-sizing: border-box;
-  }
-  
-  /* make inputs match auth‑box style */
-  .signup-input {
+    color: var(--text-color);
+}
+
+.signup-container {
+    margin-top: 100px;
+    gap: 10px;
+}
+
+/* makes inputs look like authorization boxes */
+.signup-input {
     display: inline-block;
     width: 90%;
     max-width: 400px;
-    height: 50px;                    /* same height */
-    padding: 0 30px;                 /* same horizontal padding */
-    font-size: 1.1em;                /* match font size */
-    border: 2px solid #e796fc;       /* purple border */
-    border-radius: 6px;
+    height: 50px;
+    padding: 0 30px; /* horizontal padding */
+    font-size: 1em;
+    border: 2px solid var(--text-color-dark); /* purple border */
+    border-radius: 10px;
     background: transparent;
-    color: var(--primary-color);
-    text-align: center;              /* placeholder centered */
+    color: var(--text-color);
+    text-align: center; /* centers the text */
     box-sizing: border-box;
-  }
-  
-  /* placeholder color */
-  .signup-input::placeholder {
-    color: var(--background-color-light);
-  }
-  
-  /* container for “Log in?” link + submit button */
-  .actions-container {
+}
+
+/* container for the sign-up link + submit button */
+.signup-actions-container {
     display: flex;
     gap: 10px;
     width: 90%;
     max-width: 400px;
-  }
-  
-  /* “Log in?” box */
-  .action-box {
+}
+
+/* �Sign up?� box */
+.signup-action-box {
+    flex: 0.7;
+    text-align: center;
+    padding: 14px 0px;
+    border: 2px solid var(--main-color);
+    color: var(--main-color);
+    border-radius: 10px;
+    text-decoration: none;
+    font-size: 1em;
+    transition: 0.1s;
+}
+
+.signup-action-box:hover {
+    background-color: var(--main-color-light);
+    border-color: var(--main-color-light);
+    color: var(--text-color);
+    transform: scale(1.05);
+}
+
+/* Submit button */
+.signup-submit-button {
     flex: 1;
     text-align: center;
-    padding: 12px 30px;
-    border: 2px solid #e796fc;
-    border-radius: 6px;
-    color: var(--primary-color);
+    height: 50px;
+    border: 2px var(--main-color);
+    background-color: var(--main-color);
+    border-radius: 10px;
     text-decoration: none;
-    font-size: 1.1em;
-    transition: background-color 0.2s ease;
-  }
-  .action-box:hover {
-    background-color: rgba(231, 150, 252, 0.2);
-  }
-  
-  /* Submit button */
-  .submit-button {
-    flex: 1;
-    padding: 12px 30px;
-    font-size: 1.1em;
-    border: 2px solid #ccc;       /* light grey border */
-    border-radius: 6px;
-    background: transparent;       /* clear/transparent inside */
-    color: var(--primary-color);   
+    font-size: 1em;
+    transition: 0.1s;
+    color: var(--text-color);
+}
+
+.signup-submit-button:hover {
+    background-color: var(--main-color-light);
+    transform: scale(1.035);
     cursor: pointer;
-    transition: background-color 0.2s ease;
-  }
-  .submit-button:hover {
-    background-color: rgba(0, 0, 0, 0.05);
-  }
+}

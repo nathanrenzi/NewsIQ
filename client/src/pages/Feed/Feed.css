@@ -3,92 +3,86 @@
     margin: 0 auto;
     padding: 20px;
     font-family: Arial, sans-serif;
-  }
-  
-  .top-bar {
-    background-color: #e796fc;    
+}
+
+.search-bar {
     width: 100%;
-    padding: 10px 20px;
-    box-sizing: border-box;
-    position: fixed;
-    top: 0;
-    left: 0;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-  
-  .top-bar .logo {
-    font-weight: bold;
-    font-size: 1.5em;
-    color: var(--primary-color);
-  }
-
-  .profile-button, .auth-button {
-    background-color: transparent;
-    border: 2px solid var(--primary-color);
-    color: var(--primary-color);
-    padding: 8px 16px;
-    border-radius: 6px;
-    cursor: pointer;
-    font-size: 1em;
-    transition: all 0.2s ease;
-  }
-
-  .profile-button:hover, .auth-button:hover {
-    background-color: var(--primary-color);
-    color: #e796fc;
-  }
-  
-  .search-bar-container {
-    text-align: center;
-    margin-bottom: 30px;
-    margin-top: 80px;
-  }
-  
-  .search-bar {
-    width: 60%;
     padding: 10px;
     font-size: 1rem;
-    border-radius: 25px;
-    border: 1px solid #ccc;
+    border-radius: 10px;
+    border: 2px solid var(--text-color-dark);
     box-sizing: border-box;
     margin: 0 auto;
-  }
-  
-  .articles-container {
+    background-color: var(--background-color);
+    max-width: 800px;
+}
+
+.articles-container {
     display: flex;
     flex-direction: column;
     gap: 20px;
     justify-content: center;
-  }
-  
-  .article-card {
-    background-color: #fff;
-    padding: 10px 15px;  /* Reduced padding further for a smaller height */
-    border-radius: 12px;
+    margin-top: 100px;
+}
+
+.article-card {
+    background-color: var(--background-color-light);
+    padding: 10px 15px; /* Reduced padding further for a smaller height */
+    border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    width: 100%;  /* Full width */
-    max-width: 800px;  /* Adjust max-width to make cards narrower */
-    margin: 0 auto;  /* Center the cards horizontally */
+    width: 100%; /* Full width */
+    max-width: 800px; /* Adjust max-width to make cards narrower */
+    margin: 0 auto; /* Center the cards horizontally */
     box-sizing: border-box;
     text-align: center;
-  }
-  
-  .article-card a {
+    cursor: pointer;
+    transition-duration: var(--transition-duration-short);
+}
+
+.article-card:hover {
+    transform: scale(1.02);
+}
+
+.article-card a {
     text-decoration: none;
     font-size: 1.5rem;
-    color: #007bff;
+    color: var(--main-color-light);
     font-weight: bold;
-  }
-  
-  .article-card a:hover {
-    text-decoration: underline;
-  }
-  
-  .article-description {
+}
+
+.article-description {
     font-size: 1rem;
-    margin-top: 5px;  /* Reduced margin between title and description */
-    color: #555;
-  }
-  
+    margin-top: 5px; /* Reduced margin between title and description */
+    color: var(--text-color-dark2);
+}
+
+.article-card-loading {
+    background-color: var(--background-color-light);
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 100%; /* Full width */
+    height: 123px;
+    max-width: 800px; /* Adjust max-width to make cards narrower */
+    margin: 0 auto; /* Center the cards horizontally */
+    box-sizing: border-box;
+    text-align: center;
+    position: relative;
+}
+
+.article-card-spinner {
+    width: 25px;
+    height: 25px;
+    border: 4px solid var(--text-color-dark);
+    border-top: 4px solid #555;
+    border-radius: 50%;
+    animation: spin 1.3s ease-in-out infinite;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.article-no-results {
+    margin-top: 20px;
+    align-self: center;
+}

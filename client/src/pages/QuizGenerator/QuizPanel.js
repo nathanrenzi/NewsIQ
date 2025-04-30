@@ -180,7 +180,7 @@ export default function QuizPanel({articleURL, articleCategory, articleTitle}) {
             {loaded && !complete && !error &&
                 <>
                 <div id="topDiv">
-                    <button onClick={() => backToArticle()} id="exitButton" />
+                    <button onClick={() => backToArticle()} id="exitButton" className="button" />
                     <div style={{ flexGrow: 1, paddingLeft: "10px" }}>Question {questionNumber + 1} of {totalQuestions}</div>
                 </div>
                 <div className="divider" />
@@ -206,9 +206,9 @@ export default function QuizPanel({articleURL, articleCategory, articleTitle}) {
                     <div>You got {questionsCorrect} out of {totalQuestions} questions correct!</div>
                 </div>
                 <div style={{ marginTop: "30px", display: "flex", justifyContent: "space-between" }}>
-                    <button onClick={() => backToArticle()} id="backToArticleButton" className="default">Back to article</button>
-                    <button onClick={() => initializeValues()} id="retryButton">Retry</button>
-                    <button onClick={() => navigate("/")} id="homeButton">Home</button>
+                    <button onClick={() => backToArticle()} id="backToArticleButton" className="quizEndButton">Back to article</button>
+                    <button onClick={() => initializeValues()} id="retryButton" className="quizEndButton">Retry</button>
+                    <button onClick={() => navigate("/")} id="homeButton" className="quizEndButton">Home</button>
                 </div>
                 </>
             }
