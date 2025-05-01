@@ -6,7 +6,9 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     --background-color: #2C2C2C;
+    --background-color-dark: #222222;
     --background-color-light: #444444;
+    --background-color-light-2: #555555;
     --text-color: #E4E4E4;
     --text-color-dark: #737373;
     --accent-green: #234017;

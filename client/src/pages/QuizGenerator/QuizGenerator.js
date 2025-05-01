@@ -1,7 +1,7 @@
 import { useParams } from "react-router-dom";
 
 import QuizPanel from "./QuizPanel.js";
-import "./style.css";
+import "./QuizPanel.css";
 
 export default function QuizGenerator() {
     const { url, category, title } = useParams();

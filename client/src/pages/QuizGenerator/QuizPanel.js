@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Axios from "axios";
+import "./QuizPanel.css";
 
 import Answer from "./Answer.js";
 

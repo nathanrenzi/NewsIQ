@@ -8,8 +8,8 @@
 .auth-subheadline {
     font-size: 1.5em;
     font-weight: 200;
-    margin-top: 10px;
-    margin-bottom: 70px;
+    margin-top: 15px;
+    margin-bottom: 20px;
     text-align: center;
 }
 
@@ -20,7 +20,7 @@
 }
 
 .auth-text-bottom {
-    margin-top: 60px;
+    margin-top: 10px;
 }
 
 .auth-container {
