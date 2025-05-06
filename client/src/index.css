@@ -1,5 +1,4 @@
 :root {
-    margin: 0;
     font-family: "Roboto", sans-serif;
     color-scheme: light dark;
     text-rendering: optimizeLegibility;
@@ -20,4 +19,9 @@
     --transition-duration-short: 0.05s;
     background-color: var(--background-color);
     color: var(--text-color);
+}
+
+body {
+    margin: 0;
+    padding: 0;
 }

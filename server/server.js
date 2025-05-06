@@ -50,9 +50,24 @@ const fetchOpenAIResponse = async (url) => {
     return data.choices[0].message.content;
 }
 
-app.get("/quiz/:url", async (req, res) => {
-    const response = await fetchOpenAIResponse(req.params.url);
-    res.send(response);
+app.get("/quiz", async (req, res) => {
+    const urls = req.query.url;
+    const urlList = Array.isArray(urls) ? urls : [urls];
+
+    try {
+        const responses = await Promise.all(
+            urlList.map(async (url) => {
+                const result = await fetchOpenAIResponse(url);
+                return result?.questions || [];
+            })
+        );
+        const allQuestions = responses.flat();
+        console.log(JSON.stringify({ questions: allQuestions }));
+        res.json({ questions: allQuestions });
+    } catch (error) {
+        console.error("Error processing quiz: ", error);
+        res.status(500).send("Error fetching responses");
+    }
 })
 
 async function getArticleContent(url) {
@@ -66,7 +81,7 @@ async function getArticleContent(url) {
         return articleReadability?.textContent ?? "";
     }
     catch (error) {
-        console.log("Error parsing article: " + error);
+        console.log("Error parsing article.");
         return "Error parsing article.";
     }
 }
@@ -97,11 +112,6 @@ async function getArticleContentHtml(url) {
 
 // Documentation for NewsAPI
 // https://newsapi.org/docs
-
-app.get('/fetchNewsApiKey', (req, res) => {
-    res.json({ apiKey: process.env.NEWS_API_KEY });
-  });
-  
 
 // Function to categorize article content
 const categorizeArticle = async (content) => {
@@ -139,6 +149,45 @@ const categorizeArticle = async (content) => {
         console.error("Error categorizing article:", error);
         return "Uncategorized";
     }
+}
+
+app.get("/fetchArticles/:search", async (req, res) => {
+    console.log("User requested articles.");
+    const response = await fetchArticles(null);
+    if (response) {
+        res.json(response);
+    }
+    else {
+        res.status(404).send("No articles found.");
+    }
+}) 
+
+const fetchArticles = async (search) => {
+    const apiKey = process.env.NEWS_API_KEY;
+    var url = "https://newsapi.org/v2/top-headlines?country=us&pageSize=50&" + (search ? `q=${search}&` : "")
+        + `apiKey=${apiKey}`;
+    const articles = await fetch(new Request(url))
+        .then((response) => {
+            return response.json();
+        })
+        .then((data) => {
+            return data.articles;
+        })
+        .catch((error) => {
+            if (error.status == 401) {
+                console.log("NewsAPI authorization key is needed to access NewsAPI.");
+                return null;
+            }
+        })
+    if (!articles) return null;
+    const simplifiedArticles = articles.map(({ title, description, url, urlToImage, source }) => ({
+        title,
+        description,
+        url,
+        urlToImage,
+        authors: source.name,
+    }));
+    return simplifiedArticles;
 }
 
 const fetchArticle = async (title) => {

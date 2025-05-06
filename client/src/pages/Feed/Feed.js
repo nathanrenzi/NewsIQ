@@ -10,23 +10,21 @@ const Feed = () => {
     const [multiSelect, setMultiSelect] = useState(false);
     const [selectedArticles, setSelectedArticles] = useState([]);
     const [selectedIndices, setSelectedIndices] = useState([]);
+    const [error, setError] = useState(false);
     const navigate = useNavigate();
 
     useEffect(() => {
+        setError(false);
         setArticlesLoaded(false);
         const delayDebounce = setTimeout(() => {
             const fetchNews = async () => {
                 try {
-                    const { data: { apiKey } } = await axios.get("http://localhost:9001/fetchNewsApiKey");
-                    // Fetch news articles based on search (default to "latest")
-                    const response = await axios.get(
-                        `https://newsapi.org/v2/everything?q=${search || "latest"}&apiKey=${apiKey}`
-                    );
-
-                    setArticles(response.data.articles);
+                    const response = await axios.get(`http://localhost:9001/fetchArticles/${search}`);
+                    setArticles(response.data);
                     setArticlesLoaded(true);
                 } catch (error) {
                     setArticlesLoaded(false);
+                    setError(true);
                     console.error("Error fetching news:", error);
                 }
             };
@@ -40,22 +38,30 @@ const Feed = () => {
     const handleCardClick = (articleTitle, articleIndex) => {
         if (multiSelect) {
             if (!selectedIndices.includes(articleIndex)) {
-                setSelectedArticles(prev => [...prev, encodeURIComponent(articleTitle)]);
+                setSelectedArticles(prev => [...prev, articleTitle]);
                 setSelectedIndices(prev => [...prev, articleIndex]);
             }
             else {
-                setSelectedArticles(prev => prev.filter(title => title !== encodeURIComponent(articleTitle)));
+                setSelectedArticles(prev => prev.filter(title => title !== articleTitle));
                 setSelectedIndices(prev => prev.filter(index => index !== articleIndex));
             }
         }
         else {
-            navigate(`/article/${encodeURIComponent(articleTitle)}`);
+            navigate(`/article?title=${encodeURIComponent(articleTitle)}`);
         }
     };
 
+    const handleMultiSelectClick = () => {
+        const params = new URLSearchParams();
+        selectedArticles.forEach(value => {
+            params.append('title', encodeURIComponent(value));
+        });
+        navigate(`/article?${params.toString()}`)
+    }
+
     return (
-        <div className="feed-container">
-            <div className="articles-container">
+        <div id="flexContainer">
+            <div className="article-container">
                 <div className="search-bar-div">
                     <input
                         type="text"
@@ -68,7 +74,7 @@ const Feed = () => {
                         Multi-Select
                     </button>
                 </div>
-                {articlesLoaded &&
+                {!error && articlesLoaded &&
                     <>
                     {
                         articles.map((article, index) => (
@@ -87,15 +93,15 @@ const Feed = () => {
                     {multiSelect && selectedIndices.length > 0 && 
                         <div id="multi-panel">
                             <span>{selectedIndices.length} {selectedIndices.length > 1 ? "articles" : "article"} selected</span>
-                            <button id="multi-panel-button">Start Multi-Select!</button>
+                            <button onClick={handleMultiSelectClick} id="multi-panel-button">Start Multi-Select!</button>
                         </div>
                     }
                     {articles.length == 0 &&
                         <span className="article-no-results">No results found.</span>
-                        }
+                    }
                     </>
                 }
-                {!articlesLoaded &&
+                {!error && !articlesLoaded &&
                     <>
                         {
                             Array.from({ length: 20 }).map((_, index) => (
@@ -105,6 +111,9 @@ const Feed = () => {
                             ))
                         }
                     </>
+                }
+                {error &&
+                    <span className="article-no-results">Could not load articles.</span>
                 }
             </div>
         </div>

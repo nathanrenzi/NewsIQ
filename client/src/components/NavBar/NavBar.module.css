@@ -33,7 +33,7 @@
     height: 45px;
     border: 2px solid var(--text-color);
     border-radius: 22.5px;
-    background: var(--text-color-dark) url("../assets/icons/user.svg") no-repeat center;
+    background: var(--text-color-dark) url("../../assets/icons/user.svg") no-repeat center;
     background-size: 30px;
     cursor: pointer;
     transition-duration: var(--transition-duration-short);

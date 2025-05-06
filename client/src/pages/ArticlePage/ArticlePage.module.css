@@ -1,8 +1,12 @@
-.header {
+.headerCentered, .header {
     font-size: 2.5em;
     margin-top: 100px;
     margin-bottom: 10px;
     align-self: flex-start;
+}
+
+.headerCentered {
+    align-self: center;
 }
 
 .link {
@@ -56,10 +60,20 @@
 .homeButton {
     margin-top: 20px;
     width: 150px;
-    background-color: #4a90e2;
-    color: #E4E4E4;
+    background-color: var(--main-color);
+    color: var(--text-color);
+    height: 40px;
+    border: 2px solid var(--main-color);
+    cursor: pointer;
+    border-radius: 10px;
+}
+
+.homeButton:hover {
+    background-color: var(--main-color-light);
+    border-color: var(--main-color-light);
+    transform: scale(1.04);
 }
 
 .loading {
-    margin-top: 20px;
+    margin-top: 100px;
 }

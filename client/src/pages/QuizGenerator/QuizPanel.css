@@ -235,24 +235,29 @@
     color: white;
 }
 
-#retryButton {
-    background: var(--main-color) url("../../assets/icons/retry.svg") left 13px center no-repeat;
+#retryButton, #homeButton {
     padding-left: 42px;
     background-color: var(--main-color);
     border: 2px solid var(--main-color);
     border-radius: 10px;
     height: 40px;
     color: white;
+    width: 100px;
+    cursor: pointer;
+}
+
+#retryButton:hover, #homeButton:hover {
+    transform: scale(1.03);
+    background-color: var(--main-color-light);
+    border-color: var(--main-color-light);
+}
+
+#retryButton {
+    background: var(--main-color) url("../../assets/icons/retry.svg") left 13px center no-repeat;
 }
 
 #homeButton {
     background: var(--main-color) url("../../assets/icons/home.svg") left 13px center no-repeat;
-    padding-left: 42px;
-    background-color: var(--main-color);
-    border: 2px solid var(--main-color);
-    border-radius: 10px;
-    height: 40px;
-    color: white;
 }
 
 .quizEndButton {

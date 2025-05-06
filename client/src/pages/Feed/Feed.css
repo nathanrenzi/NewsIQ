@@ -1,8 +1,13 @@
-.feed-container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 20px;
-    font-family: Arial, sans-serif;
+.article-container {
+    margin-top: 100px;
+    margin-bottom: 20px;
+    width: 70%;
+    min-width: 500px;
+    max-width: 1000px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    justify-content: center;
 }
 
 .search-bar {
@@ -117,14 +122,6 @@
 #multi-panel-button:hover {
     transform: scale(1.03);
     background-image: linear-gradient(var(--main-color-light), var(--main-color-light)), conic-gradient(from var(--selected-border-angle), var(--text-color), var(--main-color-light), var(--text-color), var(--main-color-light), var(--text-color));
-}
-
-.articles-container {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    justify-content: center;
-    margin-top: 100px;
 }
 
 .article-card {

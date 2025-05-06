@@ -32,7 +32,7 @@ export default function QuizPanel({articleURL, articleCategory, articleTitle}) {
     function initializeQuiz() {
         // Getting the quiz JSON from the server and passing in the article ID
         setError(false);
-        Axios.get(`http://localhost:9001/quiz/${encodeURIComponent(articleURL)}`).then((res) => {
+        Axios.get(`http://localhost:9001/quiz?url=${encodeURIComponent(articleURL)}&category=${encodeURIComponent(articleCategory)}`).then((res) => {
             const data = res.data;
             if (!data || data === undefined) {
                 setLoaded(false);
