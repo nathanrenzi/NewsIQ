@@ -53,12 +53,26 @@ const fetchOpenAIResponse = async (url) => {
 app.get("/quiz", async (req, res) => {
     const urls = req.query.url;
     const urlList = Array.isArray(urls) ? urls : [urls];
+    const categories = req.query.category;
+    const categoryList = Array.isArray(categories) ? categories : [categories]
+    if (categoryList.length != urlList.length) {
+        console.error("Error generating quiz. URL list does not have the same length as category list.")
+        return null;
+    }
 
     try {
         const responses = await Promise.all(
-            urlList.map(async (url) => {
-                const result = await fetchOpenAIResponse(url);
-                return result?.questions || [];
+            urlList.map(async (url, index) => {
+                const result = JSON.parse(await fetchOpenAIResponse(decodeURIComponent(url)));
+                if (result) {
+                    result.questions.forEach(question => {
+                        question.category = categoryList[index];
+                    })
+                    return result.questions;
+                }
+                else {
+                    return [];
+                }
             })
         );
         const allQuestions = responses.flat();
@@ -165,7 +179,7 @@ app.get("/fetchArticles/:search", async (req, res) => {
 const fetchArticles = async (search) => {
     const apiKey = process.env.NEWS_API_KEY;
     useSearch = search != "no-search";
-    var url = `https://newsapi.org/v2/${useSearch ? `everything?pageSize=50&q=${search}&` : "top-headlines?country=us&pageSize=50&"}`
+    var url = `https://newsapi.org/v2/${useSearch ? `everything?pageSize=50&language=en&q=${search}&` : "everything?pageSize=50&language=en&q=latest&sortBy=publishedAt&"}`
         + `apiKey=${apiKey}`;
     const articles = await fetch(new Request(url))
         .then((response) => {
@@ -177,6 +191,10 @@ const fetchArticles = async (search) => {
         .catch((error) => {
             if (error.status == 401) {
                 console.log("NewsAPI authorization key is needed to access NewsAPI.");
+                return null;
+            }
+            else {
+                console.error("Error fetching: " + error);
                 return null;
             }
         })
@@ -191,7 +209,7 @@ const fetchArticles = async (search) => {
     return simplifiedArticles;
 }
 
-const fetchArticle = async (title) => {
+const fetchArticle = async (title, tryAgain) => {
     const apiKey = process.env.NEWS_API_KEY;
     var url = "https://newsapi.org/v2/everything?" +
         `q=${encodeURIComponent(title)}&` +
@@ -209,8 +227,21 @@ const fetchArticle = async (title) => {
                 console.log("NewsAPI authorization key is needed to access NewsAPI.");
                 return null;
             }
+            else {
+                console.error("Error fetching article: " + error);
+            }
         });
-    if (!article) return null;
+    if (!article) {
+        if (tryAgain) {
+            try {
+                return await fetchArticle(title.split("-")[0], false);
+            } catch { }
+        }
+        else {
+            console.log(`No article data found for article: [${title}], returning null.`)
+            return null;
+        }
+    }
     const html = await getArticleContentHtml(article.url);
     const content = await getArticleContent(article.url);
     const category = await categorizeArticle(content);
@@ -226,7 +257,7 @@ const fetchArticle = async (title) => {
 }
 
 app.get("/article/:title", async (req, res) => {
-    const article = await fetchArticle(req.params.title);
+    const article = await fetchArticle(req.params.title, true);
     if (article) {
         res.json(article);
     }

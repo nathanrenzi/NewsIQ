@@ -32,7 +32,7 @@ export default function QuizPanel({articleURL, articleCategory, articleTitle}) {
     function initializeQuiz() {
         // Getting the quiz JSON from the server and passing in the article ID
         setError(false);
-        Axios.get(`http://localhost:9001/quiz?url=${encodeURIComponent(articleURL)}&category=${encodeURIComponent(articleCategory)}`).then((res) => {
+        Axios.get(`http://localhost:9001/quiz?${buildSearchParams("url", articleURL)}&${buildSearchParams("category", articleCategory)}`).then((res) => {
             const data = res.data;
             if (!data || data === undefined) {
                 setLoaded(false);
@@ -73,36 +73,37 @@ export default function QuizPanel({articleURL, articleCategory, articleTitle}) {
             updateVisuals(questionNumber);
             if (Object.keys(answersSelected).length === quiz["questions"].length) {
                 setComplete(true);
-                // Save score to localStorage when quiz is completed
-                const percentage = Math.round((questionsCorrect + (quiz["questions"][questionNumber]["correct"] === selection ? 1 : 0)) / quiz["questions"].length * 100);
-                saveScore(percentage);
             }
-            if (quiz["questions"][questionNumber]["correct"] === selection) {
+            let correct = quiz["questions"][questionNumber]["correct"] === selection
+            if (correct) {
                 setQuestionsCorrect(questionsCorrect + 1);
             }
+            saveScore(quiz["questions"][questionNumber].category, correct);
         }
     }
 
-    function saveScore(percentage) {
+    function saveScore(category, correct) {
         // Get existing scores from localStorage
         const storedScores = localStorage.getItem('quizScores');
         let scores = storedScores ? JSON.parse(storedScores) : [];
         
         // Check if category already exists
-        const existingScoreIndex = scores.findIndex(score => score.category === articleCategory);
+        const existingScoreIndex = scores.findIndex(score => score.category == category);
         
         if (existingScoreIndex !== -1) {
             // Update existing category score (average of old and new)
             const oldScore = scores[existingScoreIndex];
             scores[existingScoreIndex] = {
-                category: articleCategory,
-                percentage: Math.round((oldScore.percentage + percentage) / 2)
+                category: category,
+                questionsCorrect: oldScore.questionsCorrect + (correct ? 1 : 0),
+                questionsTotal: oldScore.questionsTotal + 1
             };
         } else {
             // Add new category score
             scores.push({
-                category: articleCategory,
-                percentage: percentage
+                category: category,
+                questionsCorrect: correct ? 1 : 0,
+                questionsTotal: 1
             });
         }
         
@@ -152,7 +153,15 @@ export default function QuizPanel({articleURL, articleCategory, articleTitle}) {
     }
 
     function backToArticle() {
-        navigate(`/article/${articleTitle}`)
+        navigate(`/article?${buildSearchParams("title", articleTitle)}`)
+    }
+
+    const buildSearchParams = (key, list) => {
+        const params = new URLSearchParams();
+        list.forEach(value => {
+            params.append(key, value);
+        });
+        return params.toString();
     }
 
     function getQuestionResult(qnum) {
