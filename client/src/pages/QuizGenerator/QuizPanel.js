@@ -55,7 +55,7 @@ export default function QuizPanel({articleURL, articleCategory, articleTitle}) {
         setLoaded(true);
         setQuestionNumber(0);
         setQuestionsCorrect(0);
-        setTotalQuestions(data["questions"].length);
+        setTotalQuestions(data ? data["questions"].length : 0);
         setAnswersSelected({});
         setAnswerVisuals({ answer1: "default", answer2: "default", answer3: "default", answer4: "default" })
         const controlVisuals = { previousButton: "previousButtonDisabled", nextButton: "" };

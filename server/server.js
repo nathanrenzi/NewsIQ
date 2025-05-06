@@ -152,8 +152,8 @@ const categorizeArticle = async (content) => {
 }
 
 app.get("/fetchArticles/:search", async (req, res) => {
-    console.log("User requested articles.");
-    const response = await fetchArticles(null);
+    console.log(`User requested articles with search term of: [${req.params.search}]`);
+    const response = await fetchArticles(req.params.search);
     if (response) {
         res.json(response);
     }
@@ -164,7 +164,8 @@ app.get("/fetchArticles/:search", async (req, res) => {
 
 const fetchArticles = async (search) => {
     const apiKey = process.env.NEWS_API_KEY;
-    var url = "https://newsapi.org/v2/top-headlines?country=us&pageSize=50&" + (search ? `q=${search}&` : "")
+    useSearch = search != "no-search";
+    var url = `https://newsapi.org/v2/${useSearch ? `everything?pageSize=50&q=${search}&` : "top-headlines?country=us&pageSize=50&"}`
         + `apiKey=${apiKey}`;
     const articles = await fetch(new Request(url))
         .then((response) => {

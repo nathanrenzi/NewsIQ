@@ -19,7 +19,7 @@ const Feed = () => {
         const delayDebounce = setTimeout(() => {
             const fetchNews = async () => {
                 try {
-                    const response = await axios.get(`http://localhost:9001/fetchArticles/${search}`);
+                    const response = await axios.get(`http://localhost:9001/fetchArticles/${search == "" ? "no-search" : search}`);
                     setArticles(response.data);
                     setArticlesLoaded(true);
                 } catch (error) {
