@@ -1,7 +1,3 @@
-# NewsIQ
-
-To read an article and take a quiz on it, navigate to 'http://localhost:3000/article/' + your search term separated by dashes (like-this). This will not be possible in the final build, it is for testing only until we develop the article homepage / search. At the bottom of the page you can take a quiz on the article that you read.
-
 ## Setup
 
 - Go into both client and server directories and run 'npm install'
